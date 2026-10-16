@@ -1,0 +1,813 @@
+/* ==========================================================================
+   Document Verification Portal — theme
+   Inspired by the NTU Faisalabad verification page (rebuilt in React)
+   ========================================================================== */
+
+:root {
+  --brand-blue: #1e73be;
+  --brand-blue-dark: #145a98;
+  --brand-red: #8b1e2d;
+  --brand-red-dark: #6d1420;
+  --brand-orange: #e65100;
+  --brand-orange-dark: #c74300;
+  --brand-green: #2e7d32;
+  --page-bg: #eef1f7;
+  --card-bg: #ffffff;
+  --text-muted: #6c757d;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Work Sans', 'Roboto', sans-serif;
+  background: var(--page-bg);
+  color: #333;
+  min-height: 100vh;
+}
+
+/* ---------------- Navbar ---------------- */
+.dvp-navbar {
+  background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-dark) 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  z-index: 1030;
+}
+
+.dvp-brand {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  text-decoration: none;
+}
+
+.dvp-logo-img {
+  height: 46px;
+  width: auto;
+  border-radius: 10px;
+  background: #fff;
+  padding: 3px;
+  margin-right: 12px;
+  box-shadow: inset 0 0 0 2px var(--brand-red);
+}
+
+.dvp-logo-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--brand-red);
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 1.15rem;
+  margin-right: 12px;
+  box-shadow: inset 0 0 0 2px var(--brand-red);
+}
+
+.logo-span {
+  font-family: 'Fjalla One', sans-serif;
+  color: #fff;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+}
+
+.logo-span-blue {
+  font-family: 'Fjalla One', sans-serif;
+  color: #ffd166;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+}
+
+.nav-link-custom {
+  color: #fff !important;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  background: none;
+  border: none;
+  text-transform: uppercase;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.nav-link-custom:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.4rem 0.6rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+/* ---------------- Page layout ---------------- */
+.main-wrapper {
+  padding-top: 28px;
+  padding-bottom: 40px;
+}
+
+.page-title {
+  font-family: 'Fjalla One', sans-serif;
+  color: var(--brand-blue);
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-title .fa-solid {
+  background: var(--brand-blue);
+  color: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+
+/* ---------------- Main verify card ---------------- */
+.main-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(20, 60, 120, 0.12);
+  overflow: hidden;
+  border: 1px solid #e3e8f2;
+}
+
+.form-section {
+  padding: 30px 28px;
+  border-right: 1px solid #eef1f6;
+  background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+}
+
+.result-section {
+  padding: 30px 28px;
+  background: #fbfcfe;
+}
+
+.section-heading {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #2b3a55;
+  margin-bottom: 20px;
+}
+
+.input-icon-wrap {
+  position: relative;
+}
+
+.input-icon-wrap > .fa-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9aa5b8;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.input-icon-wrap .form-control,
+.input-icon-wrap .form-select {
+  padding-left: 36px;
+  border-radius: 10px;
+  border: 1px solid #d7dde8;
+}
+
+.input-icon-wrap .form-control:focus,
+.input-icon-wrap .form-select:focus {
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 0.2rem rgba(30, 115, 190, 0.15);
+}
+
+/* ---------------- Buttons ---------------- */
+.btn-verify {
+  background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-orange-dark) 100%);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 16px;
+  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-verify:hover:not(:disabled),
+.btn-verify:active:not(:disabled) {
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(230, 81, 0, 0.45);
+}
+
+.btn-qr {
+  background: #fff;
+  color: var(--brand-blue);
+  font-weight: 600;
+  border: 2px solid var(--brand-blue);
+  border-radius: 10px;
+  padding: 10px 16px;
+}
+
+.btn-qr:hover {
+  background: var(--brand-blue);
+  color: #fff;
+}
+
+/* QR button is mobile-only, like the original portal */
+@media (min-width: 769px) {
+  .btn-qr {
+    display: none;
+  }
+}
+
+.demo-hint {
+  margin-top: 18px;
+  font-size: 0.8rem;
+  background: #eef4ff;
+  border: 1px dashed #b9cdf5;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #3c5a92;
+  line-height: 1.7;
+}
+
+.demo-hint code {
+  background: #fff;
+  padding: 1px 6px;
+  border-radius: 5px;
+  color: var(--brand-red);
+}
+
+/* ---------------- Result placeholder / loader ---------------- */
+.result-placeholder {
+  height: 100%;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+  border: 2px dashed #d7dde8;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.placeholder-icon {
+  font-size: 3rem;
+  color: #c9d4e8;
+  margin-bottom: 14px;
+}
+
+.loader-wrap {
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.loader-spinner {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 5px solid #dbe7f7;
+  border-top-color: var(--brand-blue);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-wrap p {
+  margin: 0;
+  font-weight: 500;
+  color: #3c5a92;
+}
+
+.loader-urdu {
+  font-size: 0.8rem;
+  color: #aaa;
+  direction: rtl;
+}
+
+/* ---------------- Success result card ---------------- */
+.result-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #d9ecdc;
+  overflow: hidden;
+  animation: fadeUp 0.35s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #2e7d32 0%, #1f5c23 100%);
+  color: #fff;
+  padding: 16px 18px;
+}
+
+.result-header h5 {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+}
+
+.result-icon {
+  font-size: 2rem;
+}
+
+.result-stamp {
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.result-identity {
+  display: flex;
+  gap: 16px;
+  padding: 20px 18px;
+  border-bottom: 1px solid #eef1f6;
+}
+
+.avatar-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.result-identity h4 {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+  color: #22334f;
+}
+
+.result-grid {
+  padding: 8px 18px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dashed #edf0f5;
+  font-size: 0.9rem;
+}
+
+.result-row:last-child {
+  border-bottom: none;
+}
+
+.result-label {
+  color: var(--text-muted);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.result-value {
+  font-weight: 600;
+  color: #22334f;
+  text-align: right;
+}
+
+.result-disclaimer {
+  margin: 14px 18px 18px;
+  background: #fff8e1;
+  border: 1px solid #ffecb3;
+  border-left: 4px solid #f9a825;
+  border-radius: 0 8px 8px 0;
+  padding: 11px 14px;
+  font-size: 0.78rem;
+  color: #5d4a00;
+  line-height: 1.6;
+}
+
+/* ---------------- Not found card ---------------- */
+.notfound-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #f5c6cb;
+  overflow: hidden;
+  animation: fadeUp 0.35s ease;
+}
+
+.notfound-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #c62828 0%, #8b1e2d 100%);
+  color: #fff;
+  padding: 16px 18px;
+}
+
+.nf-icon {
+  font-size: 2rem;
+}
+
+.notfound-header h6 {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.notfound-body {
+  padding: 18px;
+  font-size: 0.9rem;
+}
+
+.notfound-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.notfound-check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #444;
+}
+
+.notfound-check .fa-circle-dot {
+  color: var(--brand-blue);
+  margin-top: 3px;
+  font-size: 0.8rem;
+}
+
+.alumni-box {
+  margin-top: 14px;
+  background: #fff3e0;
+  border: 1px solid #ffe0b2;
+  border-left: 4px solid var(--brand-orange);
+  border-radius: 0 8px 8px 0;
+  padding: 11px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.84rem;
+  color: #4e2400;
+  line-height: 1.6;
+}
+
+.alumni-box > .fa-user-graduate {
+  color: var(--brand-orange);
+  font-size: 1rem;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ---------------- Guide / downloads / contact ---------------- */
+.guide-section,
+.downloads-section,
+.contact-section {
+  margin-top: 44px;
+  scroll-margin-top: 90px;
+}
+
+.step-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e3e8f2;
+  box-shadow: 0 4px 14px rgba(20, 60, 120, 0.06);
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  height: 100%;
+}
+
+.step-number {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
+  color: #fff;
+  font-family: 'Fjalla One', sans-serif;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-number.alt {
+  background: linear-gradient(135deg, var(--brand-orange), var(--brand-orange-dark));
+}
+
+.step-card h6 {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+  color: #22334f;
+}
+
+.step-card p {
+  font-size: 0.88rem;
+  color: #555;
+}
+
+.urdu-text {
+  direction: rtl;
+  text-align: right;
+  color: #3c5a92;
+}
+
+.qr-step {
+  border-left: 4px solid var(--brand-blue);
+}
+
+.issues-card {
+  border-left: 4px solid var(--brand-orange);
+}
+
+.issue-item {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.issue-item .fa-triangle-exclamation {
+  color: var(--brand-orange);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.download-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e3e8f2;
+  padding: 20px;
+  height: 100%;
+  box-shadow: 0 4px 14px rgba(20, 60, 120, 0.06);
+}
+
+.download-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #eef4ff;
+  color: var(--brand-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+.download-card h6 {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+  color: #22334f;
+}
+
+.contact-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #e3e8f2;
+  padding: 22px;
+  height: 100%;
+  box-shadow: 0 4px 14px rgba(20, 60, 120, 0.06);
+}
+
+.contact-card h6 {
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+  color: #22334f;
+  margin-bottom: 12px;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-list li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.contact-list .fa-solid {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #eef4ff;
+  color: var(--brand-blue);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------------- Footer ---------------- */
+.dvp-footer {
+  background: linear-gradient(135deg, #16233c 0%, #0d1526 100%);
+  color: #cdd6e6;
+  padding: 34px 0 20px;
+  font-size: 0.85rem;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.footer-contact {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 16px;
+  color: #8fa0bd;
+}
+
+.demo-badge {
+  background: rgba(255, 209, 102, 0.15);
+  border: 1px dashed #ffd166;
+  color: #ffd166;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+}
+
+/* ---------------- Modals ---------------- */
+.dvp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 20, 40, 0.6);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 2000;
+  animation: fadeUp 0.2s ease;
+}
+
+.dvp-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 430px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.dvp-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
+  color: #fff;
+  padding: 14px 18px;
+}
+
+.dvp-modal-header h5 {
+  margin: 0;
+  font-family: 'Maven Pro', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.dvp-modal-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dvp-modal-body {
+  padding: 20px;
+}
+
+.qr-frame {
+  position: relative;
+  border: 2px dashed #b9cdf5;
+  border-radius: 14px;
+  padding: 34px 20px;
+  background: #f6f9ff;
+  overflow: hidden;
+}
+
+.qr-icon {
+  font-size: 4.5rem;
+  color: var(--brand-blue);
+}
+
+.qr-icon.scanning {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.qr-scanline {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  height: 3px;
+  background: #2e7d32;
+  box-shadow: 0 0 12px #2e7d32;
+  animation: scan 1.2s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0%,
+  100% {
+    top: 12%;
+  }
+  50% {
+    top: 85%;
+  }
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 991px) {
+  .form-section {
+    border-right: none;
+    border-bottom: 1px solid #eef1f6;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-title {
+    font-size: 1.25rem;
+  }
+
+  .form-section,
+  .result-section {
+    padding: 22px 18px;
+  }
+
+  .logo-span,
+  .logo-span-blue {
+    font-size: 1rem;
+  }
+
+  .result-stamp {
+    display: none;
+  }
+}
