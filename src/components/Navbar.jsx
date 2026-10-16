@@ -1,4 +1,5 @@
 import React from 'react';
+import { ntuShieldLogo } from '../assets/ntuShieldLogo.js';
 
 export default function Navbar({ onLogin, onNavigate }) {
   return (
@@ -13,7 +14,7 @@ export default function Navbar({ onLogin, onNavigate }) {
               onNavigate('top');
             }}
           >
-            <img src="/images/ntu-logo.png" alt="NTU logo" className="dvp-logo-img" />
+            <img src={ntuShieldLogo} alt="NTU logo" className="dvp-logo-img" />
             <span className="logo-span">DEGREE VERIFICATION</span>
             <span className="logo-span-blue">&nbsp;PORTAL</span>
           </a>
