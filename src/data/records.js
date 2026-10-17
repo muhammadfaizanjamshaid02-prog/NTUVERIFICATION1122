@@ -18,7 +18,7 @@ export const DEMO_RECORDS = [
     cgpa: '3.15 / 4.00',
     completionDate: 'July 24, 2026',
     transcriptNo: 'T005244',
-    degreeNo: 'B009871',
+    degreeNo: 'T009871',
     verifiedOn: '16-Oct-2026, 08:46 pm',
   },
   {
@@ -33,7 +33,7 @@ export const DEMO_RECORDS = [
     cgpa: '2.87 / 4.00',
     completionDate: 'July 24, 2026',
     transcriptNo: 'T004761',
-    degreeNo: 'B007763',
+    degreeNo: 'T007763',
     verifiedOn: '16-Oct-2026, 04:03 pm',
   },
   {
@@ -48,7 +48,7 @@ export const DEMO_RECORDS = [
     cgpa: '3.42 / 4.00',
     completionDate: 'July 18, 2025',
     transcriptNo: 'T003988',
-    degreeNo: 'B006541',
+    degreeNo: 'T006541',
     verifiedOn: '16-Oct-2026, 04:05 pm',
   },
   {
@@ -63,7 +63,7 @@ export const DEMO_RECORDS = [
     cgpa: '3.10 / 4.00',
     completionDate: 'July 20, 2024',
     transcriptNo: 'T002455',
-    degreeNo: 'B005102',
+    degreeNo: 'T005102',
     verifiedOn: '16-Oct-2026, 04:06 pm',
   },
 ];
@@ -87,5 +87,5 @@ export function verifyDocument({ regNo, docType, docNo }) {
 export const DEMO_QR_SAMPLE = {
   regNo: '2022-NTU-CS-1293',
   docType: 'degree',
-  docNo: 'B007763',
+  docNo: 'T007763',
 };

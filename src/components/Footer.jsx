@@ -31,10 +31,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <span>Copyright © 2025. All Rights Reserved. National Textile University.</span>
-          <span className="demo-badge">
-            <i className="fa-solid fa-flask me-1"></i>React demo — sample data, not
-            connected to NTU systems
-          </span>
+          <span>Developed By MIS Team</span>
         </div>
       </div>
     </footer>

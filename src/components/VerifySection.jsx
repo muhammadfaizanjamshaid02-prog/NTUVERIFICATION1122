@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { verifyDocument } from '../data/records.js';
+import { verifyDocument, DEMO_RECORDS } from '../data/records.js';
 import ResultCard from './ResultCard.jsx';
 import NotFoundCard from './NotFoundCard.jsx';
 import QrModal from './QrModal.jsx';
+import BarcodeModal from './BarcodeModal.jsx';
 
 const IDLE = 'idle';
 const LOADING = 'loading';
@@ -16,6 +17,7 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
   const [status, setStatus] = useState(IDLE);
   const [record, setRecord] = useState(null);
   const [error, setError] = useState('');
+  const [barcodeOpen, setBarcodeOpen] = useState(false);
 
   const docLabel = docType === 'degree' ? 'Degree No' : 'Transcript No';
 
@@ -62,6 +64,28 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
     setStatus(IDLE);
     setRecord(null);
     setError('');
+  };
+
+  // Barcode scan: if the code matches a known Degree/Transcript serial,
+  // fill the whole form and verify; otherwise just drop it into the
+  // document-number field for the user to complete.
+  const handleBarcodeScan = (text) => {
+    const code = (text || '').trim().toUpperCase();
+    if (!code) return;
+    const hit = DEMO_RECORDS.find(
+      (r) => r.degreeNo.toUpperCase() === code || r.transcriptNo.toUpperCase() === code
+    );
+    if (hit) {
+      const isDegree = hit.degreeNo.toUpperCase() === code;
+      handleQrScan({
+        regNo: hit.regNo,
+        docType: isDegree ? 'degree' : 'transcript',
+        docNo: code,
+      });
+    } else {
+      setDocNo(text.trim());
+      setError('');
+    }
   };
 
   return (
@@ -163,6 +187,14 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
                 <i className="fa-solid fa-qrcode me-1"></i> Verify via QR Code
               </button>
 
+              <button
+                type="button"
+                className="btn btn-qr w-100 mt-2"
+                onClick={() => setBarcodeOpen(true)}
+              >
+                <i className="fa-solid fa-barcode me-1"></i> Verify via Barcode
+              </button>
+
               {status !== IDLE && (
                 <button
                   type="button"
@@ -174,12 +206,6 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
               )}
             </form>
 
-            <div className="demo-hint">
-              <i className="fa-solid fa-flask me-1"></i>
-              <strong>Try it:</strong> Registration No <code>2022-NTU-CS-1293</code>,
-              Degree No <code>B007763</code> — ya Transcript type select karke
-              Transcript No <code>T004761</code>.
-            </div>
           </div>
 
           {/* ---------------- RIGHT: RESULT ---------------- */}
@@ -222,6 +248,12 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
         show={qrOpen}
         onClose={() => setQrOpen(false)}
         onScan={handleQrScan}
+      />
+
+      <BarcodeModal
+        show={barcodeOpen}
+        onClose={() => setBarcodeOpen(false)}
+        onScan={handleBarcodeScan}
       />
     </section>
   );
