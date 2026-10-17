@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { verifyDocument, DEMO_RECORDS } from '../data/records.js';
 import ResultCard from './ResultCard.jsx';
 import NotFoundCard from './NotFoundCard.jsx';
@@ -10,14 +10,40 @@ const LOADING = 'loading';
 const SUCCESS = 'success';
 const NOT_FOUND = 'not-found';
 
+// ---------------------------------------------------------------------------
+// Showcase mode: the portal opens with Ahmad Raza's record already verified
+// and the verification form locked (not editable).
+// ---------------------------------------------------------------------------
+const SHOWCASE_RECORD = {
+  regNo: '22-NTU-TT-1034',
+  docType: 'degree',
+  docNo: 'T009871',
+};
+const FORM_LOCKED = true;
+
 export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
-  const [regNo, setRegNo] = useState('');
-  const [docType, setDocType] = useState('degree');
-  const [docNo, setDocNo] = useState('');
+  const [regNo, setRegNo] = useState(SHOWCASE_RECORD.regNo);
+  const [docType, setDocType] = useState(SHOWCASE_RECORD.docType);
+  const [docNo, setDocNo] = useState(SHOWCASE_RECORD.docNo);
   const [status, setStatus] = useState(IDLE);
   const [record, setRecord] = useState(null);
   const [error, setError] = useState('');
   const [barcodeOpen, setBarcodeOpen] = useState(false);
+
+  // Auto-verify the showcase record as soon as the page loads.
+  useEffect(() => {
+    setStatus(LOADING);
+    const t = setTimeout(() => {
+      const found = verifyDocument(SHOWCASE_RECORD);
+      if (found) {
+        setRecord(found);
+        setStatus(SUCCESS);
+      } else {
+        setStatus(NOT_FOUND);
+      }
+    }, 1500);
+    return () => clearTimeout(t);
+  }, []);
 
   const docLabel = docType === 'degree' ? 'Degree No' : 'Transcript No';
 
@@ -121,6 +147,8 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
                     placeholder="e.g. 2019-CS-01"
                     value={regNo}
                     onChange={(e) => setRegNo(e.target.value)}
+                    disabled={FORM_LOCKED}
+                    readOnly={FORM_LOCKED}
                   />
                 </div>
               </div>
@@ -139,6 +167,7 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
                       setDocType(e.target.value);
                       setDocNo('');
                     }}
+                    disabled={FORM_LOCKED}
                   >
                     <option value="degree">Degree</option>
                     <option value="transcript">Transcript</option>
@@ -159,6 +188,8 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
                     placeholder="Enter number"
                     value={docNo}
                     onChange={(e) => setDocNo(e.target.value)}
+                    disabled={FORM_LOCKED}
+                    readOnly={FORM_LOCKED}
                   />
                 </div>
               </div>
@@ -173,7 +204,7 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
               <button
                 type="submit"
                 className="btn btn-verify w-100"
-                disabled={status === LOADING}
+                disabled={status === LOADING || FORM_LOCKED}
               >
                 <i className="fa-solid fa-magnifying-glass me-1"></i>
                 {status === LOADING ? 'Verifying…' : 'Verify Now'}
@@ -183,6 +214,7 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
                 type="button"
                 className="btn btn-qr w-100 mt-2"
                 onClick={() => setQrOpen(true)}
+                disabled={FORM_LOCKED}
               >
                 <i className="fa-solid fa-qrcode me-1"></i> Verify via QR Code
               </button>
@@ -195,7 +227,7 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
                 <i className="fa-solid fa-barcode me-1"></i> Verify via Barcode
               </button>
 
-              {status !== IDLE && (
+              {status !== IDLE && !FORM_LOCKED && (
                 <button
                   type="button"
                   className="btn btn-link btn-sm mt-2 w-100 text-decoration-none"
