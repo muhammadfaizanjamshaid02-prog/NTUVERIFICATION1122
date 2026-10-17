@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { verifyDocument, DEMO_RECORDS } from '../data/records.js';
 import ResultCard from './ResultCard.jsx';
 import NotFoundCard from './NotFoundCard.jsx';
@@ -91,72 +91,26 @@ export default function VerifySection({ onContact }) {
     setError('');
   };
 
-  // Pre-opened result tab (created on the QR button tap, i.e. a real user
-  // gesture) so popup blockers don't stop the scanned link from opening.
-  const pendingTabRef = useRef(null);
-
-  const openScanner = () => {
-    try {
-      pendingTabRef.current = window.open('about:blank', '_blank');
-    } catch {
-      pendingTabRef.current = null;
-    }
-    setBarcodeOpen(true);
-  };
-
-  const closeScanner = () => {
-    setBarcodeOpen(false);
-    const t = pendingTabRef.current;
-    pendingTabRef.current = null;
-    try {
-      if (t && !t.closed) t.close();
-    } catch {
-      /* ignore */
-    }
-  };
-
-  const openScanTarget = (raw) => {
-    const isUrl = /^https?:\/\//i.test(raw);
-    const target = isUrl
-      ? raw
-      : 'https://www.google.com/search?q=' + encodeURIComponent(raw);
-    const t = pendingTabRef.current;
-    pendingTabRef.current = null;
-    try {
-      if (t && !t.closed) {
-        t.location.href = target;
-        return;
-      }
-    } catch {
-      /* fall through to window.open */
-    }
-    try {
-      window.open(target, '_blank', 'noopener,noreferrer');
-    } catch {
-      /* popup blocked — verification still continues */
-    }
-  };
-
   // Barcode/QR scan: if the code matches a known Degree/Transcript serial,
   // fill the whole form and verify; otherwise just drop it into the
-  // document-number field. The scanned code is also opened (site or Google).
+  // document-number field. The scanned code is also opened in Google.
   const handleBarcodeScan = (text) => {
     const raw = (text || '').trim();
     const code = raw.toUpperCase();
     setBarcodeOpen(false);
-    if (!code) {
-      const t = pendingTabRef.current;
-      pendingTabRef.current = null;
-      try {
-        if (t && !t.closed) t.close();
-      } catch {
-        /* ignore */
-      }
-      return;
-    }
+    if (!code) return;
     // If the scanned QR holds a website link, open that site directly;
     // otherwise open the scanned code in Google (new tab).
-    openScanTarget(raw);
+    try {
+      const isUrl = /^https?:\/\//i.test(raw);
+      window.open(
+        isUrl ? raw : 'https://www.google.com/search?q=' + encodeURIComponent(raw),
+        '_blank',
+        'noopener,noreferrer'
+      );
+    } catch {
+      /* popup blocked — verification still continues */
+    }
     const hit = DEMO_RECORDS.find(
       (r) => r.degreeNo.toUpperCase() === code || r.transcriptNo.toUpperCase() === code
     );
@@ -272,7 +226,7 @@ export default function VerifySection({ onContact }) {
               <button
                 type="button"
                 className="btn btn-qr w-100 mt-2"
-                onClick={() => (barcodeOpen ? closeScanner() : openScanner())}
+                onClick={() => setBarcodeOpen((v) => !v)}
               >
                 <i className="fa-solid fa-qrcode me-1"></i> Verify via QR Code
               </button>
@@ -280,7 +234,7 @@ export default function VerifySection({ onContact }) {
               {barcodeOpen && (
                 <InlineScanner
                   onScan={handleBarcodeScan}
-                  onClose={closeScanner}
+                  onClose={() => setBarcodeOpen(false)}
                 />
               )}
 
