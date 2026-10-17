@@ -4,7 +4,7 @@ import { Html5Qrcode, Html5QrcodeSupportedFormats } from 'html5-qrcode';
 // ---------------------------------------------------------------------------
 // Real barcode reader: uses the device camera (via html5-qrcode) to read
 // 1D barcodes (CODE-128, CODE-39, EAN, UPC …) printed on degrees/transcripts.
-// Falls back to manual entry when no camera is available (e.g. desktop).
+// Clean scanner UI — just the camera frame, nothing else.
 // ---------------------------------------------------------------------------
 
 const FORMATS = [
@@ -21,7 +21,6 @@ const FORMATS = [
 
 export default function BarcodeModal({ show, onClose, onScan }) {
   const [error, setError] = useState('');
-  const [manual, setManual] = useState('');
   const scannerRef = useRef(null);
   const onScanRef = useRef(onScan);
   onScanRef.current = onScan;
@@ -31,7 +30,6 @@ export default function BarcodeModal({ show, onClose, onScan }) {
   useEffect(() => {
     if (!show) return;
     setError('');
-    setManual('');
     let cancelled = false;
 
     const finish = async (scanner, text) => {
@@ -71,7 +69,7 @@ export default function BarcodeModal({ show, onClose, onScan }) {
           setError(
             'Camera start nahi ho saka (' +
               (e && e.message ? e.message : 'permission denied') +
-              '). Neeche barcode number haath se likh kar try karein.'
+              '). Browser se camera ki ijazat dein aur dobara try karein.'
           );
         }
       }
@@ -91,12 +89,6 @@ export default function BarcodeModal({ show, onClose, onScan }) {
   }, [show]);
 
   if (!show) return null;
-
-  const useManual = () => {
-    if (!manual.trim()) return;
-    onScan(manual.trim());
-    onClose();
-  };
 
   return (
     <div className="dvp-modal-overlay" onClick={onClose}>
@@ -118,28 +110,6 @@ export default function BarcodeModal({ show, onClose, onScan }) {
               {error}
             </div>
           )}
-
-          <p className="text-muted small mt-2 mb-2">
-            Camera ko degree / transcript par chhape QR code ya barcode par
-            rakhein — code parhte hi Google mein khulega aur form bhi fill ho
-            jayega.
-          </p>
-
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Ya barcode number yahan likhein, e.g. T007763"
-              value={manual}
-              onChange={(e) => setManual(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') useManual();
-              }}
-            />
-            <button className="btn btn-verify" type="button" onClick={useManual}>
-              <i className="fa-solid fa-check me-1"></i>Use
-            </button>
-          </div>
         </div>
       </div>
     </div>
