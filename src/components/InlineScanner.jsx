@@ -23,6 +23,7 @@ export default function InlineScanner({ onScan, onClose }) {
   const [error, setError] = useState('');
   const [starting, setStarting] = useState(true);
   const scannerRef = useRef(null);
+  const fileInputRef = useRef(null);
   const onScanRef = useRef(onScan);
   onScanRef.current = onScan;
   const onCloseRef = useRef(onClose);
@@ -68,9 +69,9 @@ export default function InlineScanner({ onScan, onClose }) {
         if (!cancelled) {
           setStarting(false);
           setError(
-            'Camera start nahi ho saka (' +
+            'Could not start the camera (' +
               (e && e.message ? e.message : 'permission denied') +
-              '). Browser se camera ki ijazat dein aur dobara try karein.'
+              '). Please allow camera access in your browser and try again.'
           );
         }
       }
@@ -89,6 +90,36 @@ export default function InlineScanner({ onScan, onClose }) {
     };
   }, []);
 
+  // Scan a QR/barcode from an uploaded image (e.g. a QR saved on this phone)
+  const onFilePicked = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    const scanner = scannerRef.current;
+    if (!scanner) return;
+    try {
+      const text = await scanner.scanFile(file, false);
+      const s = scannerRef.current;
+      scannerRef.current = null;
+      if (s) {
+        try {
+          await s.stop();
+        } catch {
+          /* ignore */
+        }
+        try {
+          await s.clear();
+        } catch {
+          /* ignore */
+        }
+      }
+      onScanRef.current(text);
+      onCloseRef.current();
+    } catch {
+      setError('Could not read a QR/barcode from that image. Try a clearer photo.');
+    }
+  };
+
   return (
     <div className="inline-scanner">
       <button
@@ -99,9 +130,25 @@ export default function InlineScanner({ onScan, onClose }) {
       >
         <i className="fa-solid fa-xmark"></i>
       </button>
+      <button
+        type="button"
+        className="scanner-upload"
+        onClick={() => fileInputRef.current && fileInputRef.current.click()}
+        aria-label="Upload QR image"
+        title="Upload QR image"
+      >
+        <i className="fa-solid fa-image"></i>
+      </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        style={{ display: 'none' }}
+        onChange={onFilePicked}
+      />
       <div id="barcode-reader-region" className="barcode-region"></div>
       {starting && !error && (
-        <div className="scanner-status">Camera start ho raha hai…</div>
+        <div className="scanner-status">Starting camera…</div>
       )}
       <div className="scan-frame" aria-hidden="true">
         <span className="corner tl"></span>
