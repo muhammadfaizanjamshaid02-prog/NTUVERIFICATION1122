@@ -21,6 +21,7 @@ const FORMATS = [
 
 export default function InlineScanner({ onScan, onClose }) {
   const [error, setError] = useState('');
+  const [starting, setStarting] = useState(true);
   const scannerRef = useRef(null);
   const onScanRef = useRef(onScan);
   onScanRef.current = onScan;
@@ -62,8 +63,10 @@ export default function InlineScanner({ onScan, onClose }) {
             /* per-frame decode miss — ignore */
           }
         );
+        if (!cancelled) setStarting(false);
       } catch (e) {
         if (!cancelled) {
+          setStarting(false);
           setError(
             'Camera start nahi ho saka (' +
               (e && e.message ? e.message : 'permission denied') +
@@ -97,6 +100,9 @@ export default function InlineScanner({ onScan, onClose }) {
         <i className="fa-solid fa-xmark"></i>
       </button>
       <div id="barcode-reader-region" className="barcode-region"></div>
+      {starting && !error && (
+        <div className="scanner-status">Camera start ho raha hai…</div>
+      )}
       <div className="scan-frame" aria-hidden="true">
         <span className="corner tl"></span>
         <span className="corner tr"></span>

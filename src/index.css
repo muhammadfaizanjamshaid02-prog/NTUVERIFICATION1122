@@ -858,6 +858,21 @@ body {
   min-height: 320px;
 }
 
+.scanner-status {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  color: #fff;
+  font-size: 0.9rem;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 8px 16px;
+  border-radius: 20px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 .scanner-close {
   position: absolute;
   top: 10px;
