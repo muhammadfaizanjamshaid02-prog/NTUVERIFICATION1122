@@ -150,12 +150,6 @@ export default function InlineScanner({ onScan, onClose }) {
       {starting && !error && (
         <div className="scanner-status">Starting camera…</div>
       )}
-      <div className="scan-frame" aria-hidden="true">
-        <span className="corner tl"></span>
-        <span className="corner tr"></span>
-        <span className="corner bl"></span>
-        <span className="corner br"></span>
-      </div>
       {error && (
         <div className="alert alert-warning py-2 mt-2 text-start" role="alert">
           <i className="fa-solid fa-triangle-exclamation me-1"></i>
