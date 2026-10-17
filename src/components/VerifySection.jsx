@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { verifyDocument, DEMO_RECORDS } from '../data/records.js';
 import ResultCard from './ResultCard.jsx';
 import NotFoundCard from './NotFoundCard.jsx';
-import BarcodeModal from './BarcodeModal.jsx';
+import InlineScanner from './InlineScanner.jsx';
 
 const IDLE = 'idle';
 const LOADING = 'loading';
@@ -225,10 +225,17 @@ export default function VerifySection({ onContact }) {
               <button
                 type="button"
                 className="btn btn-qr w-100 mt-2"
-                onClick={() => setBarcodeOpen(true)}
+                onClick={() => setBarcodeOpen((v) => !v)}
               >
                 <i className="fa-solid fa-qrcode me-1"></i> Verify via QR Code
               </button>
+
+              {barcodeOpen && (
+                <InlineScanner
+                  onScan={handleBarcodeScan}
+                  onClose={() => setBarcodeOpen(false)}
+                />
+              )}
 
               {status !== IDLE && !FORM_LOCKED && (
                 <button
@@ -306,11 +313,6 @@ export default function VerifySection({ onContact }) {
         </div>
       </div>
 
-      <BarcodeModal
-        show={barcodeOpen}
-        onClose={() => setBarcodeOpen(false)}
-        onScan={handleBarcodeScan}
-      />
     </section>
   );
 }
