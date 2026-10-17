@@ -701,6 +701,62 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
+/* ---------------- Controller of Examinations Office card (below verify) ---------------- */
+.exam-office-card {
+  margin-top: 22px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e6ecf5;
+  box-shadow: 0 4px 18px rgba(20, 40, 90, 0.08);
+}
+
+.exam-office-header {
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 18px;
+}
+
+.exam-office-body {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exam-office-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+.exam-office-row i {
+  margin-top: 4px;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.exam-office-row a {
+  color: var(--brand-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Laptop / desktop: card items sit side-by-side */
+@media (min-width: 768px) {
+  .exam-office-body {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 32px;
+  }
+}
+
 /* Laptop / desktop: modals open wider instead of staying mobile-sized */
 @media (min-width: 768px) {
   .dvp-modal {

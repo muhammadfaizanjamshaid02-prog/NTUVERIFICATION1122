@@ -276,6 +276,33 @@ export default function VerifySection({ onContact }) {
         </div>
       </div>
 
+      {/* Controller of Examinations Office card — right below the verification card, on every screen size */}
+      <div className="exam-office-card">
+        <div className="exam-office-header">
+          <i className="fa-solid fa-building-columns me-2"></i>
+          Controller of Examinations Office
+        </div>
+        <div className="exam-office-body">
+          <div className="exam-office-row">
+            <i className="fa-solid fa-location-dot text-danger"></i>
+            <span>
+              Admissions &amp; Examinations Office, National Textile
+              University, Faisalabad-37610, Pakistan
+            </span>
+          </div>
+          <div className="exam-office-row">
+            <i className="fa-solid fa-phone text-success"></i>
+            <span>
+              +92-41-9230081-90 <span className="text-muted">Ext: 125,127</span>
+            </span>
+          </div>
+          <div className="exam-office-row">
+            <i className="fa-solid fa-envelope text-primary"></i>
+            <a href="mailto:coe@ntu.edu.pk">coe@ntu.edu.pk</a>
+          </div>
+        </div>
+      </div>
+
       <BarcodeModal
         show={barcodeOpen}
         onClose={() => setBarcodeOpen(false)}
