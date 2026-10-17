@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { verifyDocument, DEMO_RECORDS } from '../data/records.js';
 import ResultCard from './ResultCard.jsx';
 import NotFoundCard from './NotFoundCard.jsx';
-import QrModal from './QrModal.jsx';
 import BarcodeModal from './BarcodeModal.jsx';
 
 const IDLE = 'idle';
@@ -21,7 +20,7 @@ const SHOWCASE_RECORD = {
 };
 const FORM_LOCKED = true;
 
-export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
+export default function VerifySection({ onContact }) {
   const [regNo, setRegNo] = useState(SHOWCASE_RECORD.regNo);
   const [docType, setDocType] = useState(SHOWCASE_RECORD.docType);
   const [docNo, setDocNo] = useState(SHOWCASE_RECORD.docNo);
@@ -92,12 +91,22 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
     setError('');
   };
 
-  // Barcode scan: if the code matches a known Degree/Transcript serial,
+  // Barcode/QR scan: if the code matches a known Degree/Transcript serial,
   // fill the whole form and verify; otherwise just drop it into the
-  // document-number field for the user to complete.
+  // document-number field. The scanned code is also opened in Google.
   const handleBarcodeScan = (text) => {
     const code = (text || '').trim().toUpperCase();
     if (!code) return;
+    // Open the scanned code in Google (new tab).
+    try {
+      window.open(
+        'https://www.google.com/search?q=' + encodeURIComponent(text.trim()),
+        '_blank',
+        'noopener,noreferrer'
+      );
+    } catch {
+      /* popup blocked — verification still continues */
+    }
     const hit = DEMO_RECORDS.find(
       (r) => r.degreeNo.toUpperCase() === code || r.transcriptNo.toUpperCase() === code
     );
@@ -213,18 +222,9 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
               <button
                 type="button"
                 className="btn btn-qr w-100 mt-2"
-                onClick={() => setQrOpen(true)}
-                disabled={FORM_LOCKED}
-              >
-                <i className="fa-solid fa-qrcode me-1"></i> Verify via QR Code
-              </button>
-
-              <button
-                type="button"
-                className="btn btn-qr w-100 mt-2"
                 onClick={() => setBarcodeOpen(true)}
               >
-                <i className="fa-solid fa-barcode me-1"></i> Verify via Barcode
+                <i className="fa-solid fa-qrcode me-1"></i> Verify via QR Code
               </button>
 
               {status !== IDLE && !FORM_LOCKED && (
@@ -275,12 +275,6 @@ export default function VerifySection({ onContact, qrOpen, setQrOpen }) {
           </div>
         </div>
       </div>
-
-      <QrModal
-        show={qrOpen}
-        onClose={() => setQrOpen(false)}
-        onScan={handleQrScan}
-      />
 
       <BarcodeModal
         show={barcodeOpen}

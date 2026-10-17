@@ -103,7 +103,7 @@ export default function BarcodeModal({ show, onClose, onScan }) {
       <div className="dvp-modal" onClick={(e) => e.stopPropagation()}>
         <div className="dvp-modal-header">
           <h5>
-            <i className="fa-solid fa-barcode me-2"></i>Verify via Barcode
+            <i className="fa-solid fa-qrcode me-2"></i>Verify via QR / Barcode
           </h5>
           <button className="dvp-modal-close" onClick={onClose} aria-label="Close">
             <i className="fa-solid fa-xmark"></i>
@@ -120,8 +120,9 @@ export default function BarcodeModal({ show, onClose, onScan }) {
           )}
 
           <p className="text-muted small mt-2 mb-2">
-            Camera ko degree / transcript par chhape barcode par rakhein — code
-            parhte hi form khud fill ho jayega.
+            Camera ko degree / transcript par chhape QR code ya barcode par
+            rakhein — code parhte hi Google mein khulega aur form bhi fill ho
+            jayega.
           </p>
 
           <div className="input-group">

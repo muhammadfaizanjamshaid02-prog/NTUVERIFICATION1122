@@ -9,7 +9,6 @@ import LoginModal from './components/LoginModal.jsx';
 
 export default function App() {
   const [loginOpen, setLoginOpen] = useState(false);
-  const [qrOpen, setQrOpen] = useState(false);
 
   const navigate = (target) => {
     const el = document.getElementById(target);
@@ -24,11 +23,7 @@ export default function App() {
       />
 
       <main className="container main-wrapper">
-        <VerifySection
-          onContact={() => navigate('contact')}
-          qrOpen={qrOpen}
-          setQrOpen={setQrOpen}
-        />
+        <VerifySection onContact={() => navigate('contact')} />
         <HowToGuide />
         <Downloads />
         <ContactSection />
