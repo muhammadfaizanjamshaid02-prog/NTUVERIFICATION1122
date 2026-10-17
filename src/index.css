@@ -708,6 +708,19 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
 
+/* Laptop / desktop: modals open wider instead of staying mobile-sized */
+@media (min-width: 768px) {
+  .dvp-modal {
+    max-width: 600px;
+  }
+  .dvp-modal-wide {
+    max-width: 780px;
+  }
+  .barcode-region {
+    min-height: 340px;
+  }
+}
+
 .dvp-modal-header {
   display: flex;
   justify-content: space-between;

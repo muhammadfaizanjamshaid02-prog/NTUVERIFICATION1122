@@ -100,7 +100,7 @@ export default function BarcodeModal({ show, onClose, onScan }) {
 
   return (
     <div className="dvp-modal-overlay" onClick={onClose}>
-      <div className="dvp-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="dvp-modal dvp-modal-wide" onClick={(e) => e.stopPropagation()}>
         <div className="dvp-modal-header">
           <h5>
             <i className="fa-solid fa-qrcode me-2"></i>Verify via QR / Barcode
