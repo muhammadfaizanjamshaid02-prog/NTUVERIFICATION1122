@@ -50,6 +50,22 @@ export default function InlineScanner({ onScan, onClose }) {
     };
 
     const t = setTimeout(async () => {
+      // If the browser has the camera blocked for this site, explain how
+      // to re-allow it instead of failing silently.
+      try {
+        if (navigator.permissions && navigator.permissions.query) {
+          const st = await navigator.permissions.query({ name: 'camera' });
+          if (st.state === 'denied' && !cancelled) {
+            setStarting(false);
+            setError(
+              'Camera is blocked for this site. Tap the lock icon in the address bar → Permissions → Camera → Allow, then try again.'
+            );
+            return;
+          }
+        }
+      } catch {
+        /* Permissions API not supported — proceed normally */
+      }
       let scanner;
       try {
         scanner = new Html5Qrcode('barcode-reader-region');
