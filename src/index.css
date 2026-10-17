@@ -223,6 +223,14 @@ body {
   color: #fff;
 }
 
+/* Official NTU behavior: QR scan button is visible ONLY on mobile screens.
+   On desktop, please use manual entry. */
+@media (min-width: 769px) {
+  .btn-qr {
+    display: none;
+  }
+}
+
 .demo-hint {
   margin-top: 18px;
   font-size: 0.8rem;

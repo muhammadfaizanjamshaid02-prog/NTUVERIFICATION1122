@@ -73,20 +73,20 @@ export default function HowToGuide() {
                 <span className="badge bg-info text-dark ms-1">Mobile Only</span>
               </h6>
               <p className="mb-1">
-                Tap “Verify via QR Code” and point your camera at the QR code
-                or barcode printed on your degree or transcript. The system
-                will automatically scan and verify — no manual number entry
-                required. Works on mobile as well as on laptop/desktop with a
-                webcam.
+                On a mobile device, tap “Verify via QR Code” and point your
+                camera at the QR code printed on your degree or transcript.
+                The system will automatically scan and verify — no manual
+                number entry required.
               </p>
               <p className="urdu-text mb-2">
-                «Verify via QR Code» دبائیں اور کیمرہ ڈگری/ٹرانسکرپٹ کے QR کوڈ
-                یا بارکوڈ پر رکھیں۔ کوئی نمبر درج کرنے کی ضرورت نہیں۔
+                موبائل پر «Verify via QR Code» دبائیں اور کیمرہ ڈگری/ٹرانسکرپٹ
+                کے QR کوڈ پر رکھیں۔ کوئی نمبر درج کرنے کی ضرورت نہیں۔
               </p>
               <p className="mb-0 small text-muted">
-                <strong>Note:</strong> The scan button is visible on{' '}
-                <u>all screen sizes</u>. Ensure you allow camera access when
-                prompted by your browser.
+                <strong>Note:</strong> The QR scan button is visible{' '}
+                <u>only on mobile screens</u>. On desktop, please use manual
+                entry. Ensure you allow camera access when prompted by your
+                browser.
               </p>
             </div>
           </div>
