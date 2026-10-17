@@ -7,7 +7,7 @@
 export const DEMO_RECORDS = [
   {
     regNo: '22-NTU-TT-1034',
-    fatherName: 'BASHARAT ALI',
+    fatherName: 'Basharat Ali',
     name: 'Ahmad Raza',
     dob: '29-08-2003',
     cnic: '33100-9889253-1',
@@ -15,7 +15,7 @@ export const DEMO_RECORDS = [
     program: 'BS Textile Engineering Technology',
     specialization: 'Textile Engineering Technology',
     session: '2022 - 2026',
-    cgpa: '3.15 / 4.00',
+    cgpa: '2.68 / 4.00',
     completionDate: 'July 24, 2026',
     transcriptNo: 'T005244',
     degreeNo: 'T009871',
