@@ -95,12 +95,15 @@ export default function VerifySection({ onContact }) {
   // fill the whole form and verify; otherwise just drop it into the
   // document-number field. The scanned code is also opened in Google.
   const handleBarcodeScan = (text) => {
-    const code = (text || '').trim().toUpperCase();
+    const raw = (text || '').trim();
+    const code = raw.toUpperCase();
     if (!code) return;
-    // Open the scanned code in Google (new tab).
+    // If the scanned QR holds a website link, open that site directly;
+    // otherwise open the scanned code in Google (new tab).
     try {
+      const isUrl = /^https?:\/\//i.test(raw);
       window.open(
-        'https://www.google.com/search?q=' + encodeURIComponent(text.trim()),
+        isUrl ? raw : 'https://www.google.com/search?q=' + encodeURIComponent(raw),
         '_blank',
         'noopener,noreferrer'
       );
