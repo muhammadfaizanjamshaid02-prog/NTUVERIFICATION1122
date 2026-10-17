@@ -206,7 +206,15 @@ body {
 .btn-verify:active:not(:disabled) {
   color: #fff;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(230, 81, 0, 0.45);
+  box-shadow: 0 6px 16px rgba(198, 40, 40, 0.45);
+}
+
+/* Disabled bhi red hi rahe (showcase mode mein form locked hota hai) */
+.btn-verify:disabled {
+  background: linear-gradient(135deg, #c62828 0%, #a51f1f 100%);
+  color: #fff;
+  border: none;
+  opacity: 0.6;
 }
 
 .btn-qr {
@@ -222,6 +230,14 @@ body {
 .btn-qr:hover {
   background: #258a38;
   color: #fff;
+}
+
+/* Disabled bhi green hi rahe */
+.btn-qr:disabled {
+  background: #2ea043;
+  color: #fff;
+  border: none;
+  opacity: 0.6;
 }
 
 /* Official NTU behavior: QR scan button is visible ONLY on mobile screens.
