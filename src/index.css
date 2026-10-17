@@ -223,13 +223,6 @@ body {
   color: #fff;
 }
 
-/* QR button is mobile-only, like the original portal */
-@media (min-width: 769px) {
-  .btn-qr {
-    display: none;
-  }
-}
-
 .demo-hint {
   margin-top: 18px;
   font-size: 0.8rem;
